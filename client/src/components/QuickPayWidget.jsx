@@ -19,18 +19,16 @@ export default function QuickPayWidget() {
         
         <div className="w-full space-y-3">
           <button 
-            type="button"
-            onClick={() => window.dispatchEvent(new CustomEvent('open-download-modal'))}
-            className="w-full bg-slate-950 hover:bg-slate-850 text-white font-bold py-3.5 px-4 rounded-xl transition-colors shadow-lg flex items-center justify-center gap-2 group cursor-pointer"
+            onClick={() => alert("📥 Download started for Android APK...")}
+            className="w-full bg-slate-950 hover:bg-slate-850 text-white font-bold py-3.5 px-4 rounded-xl transition-colors shadow-lg flex items-center justify-center gap-2 group"
           >
             <Download className="h-5 w-5 text-amber-400 group-hover:-translate-y-0.5 transition-transform" /> 
             Download for Android
           </button>
           
           <button 
-            type="button"
-            onClick={() => window.dispatchEvent(new CustomEvent('open-download-modal'))}
-            className="w-full bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-700 font-bold py-3.5 px-4 rounded-xl transition-colors flex items-center justify-center gap-2 cursor-pointer"
+            onClick={() => alert("📥 iOS App download queued...")}
+            className="w-full bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-700 font-bold py-3.5 px-4 rounded-xl transition-colors flex items-center justify-center gap-2"
           >
             <Download className="h-5 w-5 text-slate-400" /> 
             Download for iOS

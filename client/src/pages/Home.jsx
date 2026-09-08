@@ -81,13 +81,12 @@ export default function Home() {
                 >
                   Explore 12 Services <ArrowRight className="h-4 w-4" />
                 </Link>
-                <button
-                  type="button"
-                  onClick={() => window.dispatchEvent(new CustomEvent('open-download-modal'))}
-                  className="border border-slate-700 hover:border-slate-500 text-slate-300 hover:text-white px-8 py-3.5 rounded-full transition-colors text-sm font-semibold cursor-pointer"
+                <a
+                  href="#download-app-banner"
+                  className="border border-slate-700 hover:border-slate-500 text-slate-300 hover:text-white px-8 py-3.5 rounded-full transition-colors text-sm font-semibold"
                 >
                   Download App
-                </button>
+                </a>
               </div>
             </div>
 
