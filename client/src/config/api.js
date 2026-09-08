@@ -1,13 +1,11 @@
 // Centralized API configuration for Development & Production hosting
 const getApiBaseUrl = () => {
-  // Default already includes /api so no double-append happens
-  let url = import.meta.env.VITE_API_URL || 'https://api.rudranpay.com';
-  url = url.trim().replace(/\/+$/, '');
-  // Append /api only if not already present
-  if (!url.endsWith('/api')) {
-    url = `${url}/api`;
+  // In production always use the live backend URL
+  if (import.meta.env.PROD) {
+    return 'https://api.rudranpay.com/api';
   }
-  return url;
+  // In development use local server
+  return import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 };
 
 export const API_BASE_URL = getApiBaseUrl();
