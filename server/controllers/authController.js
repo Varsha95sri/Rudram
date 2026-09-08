@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
 exports.register = async (req, res) => {
-  const { name, email, password, phone } = req.body;
+  const { name, email, password } = req.body;
 
   try {
     let user = await User.findOne({ where: { email } });
@@ -17,28 +17,13 @@ exports.register = async (req, res) => {
     user = await User.create({
       name,
       email,
-      phone: phone || '',
-      password: hashedPassword,
-      role: 'user',
-      walletBalance: 0,
-      status: 'active'
+      password: hashedPassword
     });
 
-    const payload = { user: { id: user.id, role: user.role } };
-    const token = jwt.sign(payload, process.env.JWT_SECRET || 'rudram_jwt_secret_key_2026', { expiresIn: '7d' });
+    const payload = { user: { id: user.id } };
+    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '5h' });
 
-    res.json({
-      token,
-      user: {
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        phone: user.phone,
-        role: user.role,
-        walletBalance: user.walletBalance,
-        status: user.status
-      }
-    });
+    res.json({ token, user: { id: user.id, name: user.name, email: user.email } });
   } catch (error) {
     console.error(error.message);
     res.status(500).send('Server error');
@@ -54,31 +39,15 @@ exports.login = async (req, res) => {
       return res.status(400).json({ message: 'Invalid Credentials' });
     }
 
-    if (user.status === 'blocked') {
-      return res.status(403).json({ message: 'Account is blocked. Please contact support.' });
-    }
-
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(400).json({ message: 'Invalid Credentials' });
     }
 
-    const payload = { user: { id: user.id, role: user.role } };
-    const token = jwt.sign(payload, process.env.JWT_SECRET || 'rudram_jwt_secret_key_2026', { expiresIn: '7d' });
+    const payload = { user: { id: user.id } };
+    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '5h' });
 
-    res.json({
-      token,
-      user: {
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        phone: user.phone,
-        role: user.role,
-        walletBalance: user.walletBalance,
-        status: user.status,
-        avatar: user.avatar
-      }
-    });
+    res.json({ token, user: { id: user.id, name: user.name, email: user.email } });
   } catch (error) {
     console.error(error.message);
     res.status(500).send('Server error');
@@ -88,13 +57,9 @@ exports.login = async (req, res) => {
 exports.getMe = async (req, res) => {
   try {
     const user = await User.findByPk(req.user.id, { attributes: { exclude: ['password'] } });
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
     res.json(user);
   } catch (error) {
     console.error(error.message);
     res.status(500).send('Server Error');
   }
 };
-

@@ -59,30 +59,22 @@ const Registration = sequelize.define('Registration', {
     type: DataTypes.STRING,
     allowNull: true, // Will store file path/name
   },
-  feeAmount: {
-    type: DataTypes.FLOAT,
-    defaultValue: 0,
-  },
-  paymentMode: {
-    type: DataTypes.STRING,
-    defaultValue: 'PhonePe / UPI QR',
-  },
-  transactionId: {
-    type: DataTypes.STRING,
-    allowNull: true, // UTR or UPI Reference Number
-  },
-  paymentProof: {
-    type: DataTypes.STRING,
-    allowNull: true, // Receipt screenshot image path
-  },
   paymentStatus: {
-    type: DataTypes.ENUM('Pending', 'Completed', 'Rejected'),
-    defaultValue: 'Pending',
+    type: DataTypes.ENUM('Pending', 'Completed', 'Failed'),
+    defaultValue: 'Pending'
   },
-  adminNotes: {
-    type: DataTypes.TEXT,
+  razorpay_order_id: {
+    type: DataTypes.STRING,
     allowNull: true,
   },
+  razorpay_payment_id: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  razorpay_signature: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  }
 }, {
   timestamps: true,
 });

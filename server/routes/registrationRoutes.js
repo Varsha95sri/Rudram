@@ -4,12 +4,11 @@ const multer = require('multer');
 const fs = require('fs');
 const path = require('path');
 const registrationController = require('../controllers/registrationController');
-const paymentSettingController = require('../controllers/paymentSettingController');
 
 // Ensure uploads directory exists
 const uploadDir = path.join(__dirname, '..', 'uploads');
 if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir, { recursive: true });
+  fs.mkdirSync(uploadDir);
 }
 
 // Multer config for file upload
@@ -18,21 +17,15 @@ const storage = multer.diskStorage({
     cb(null, 'uploads/');
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + '-' + file.originalname.replace(/\s+/g, '_'));
+    cb(null, Date.now() + '-' + file.originalname);
   }
 });
 const upload = multer({ storage: storage });
 
 // Routes
-router.get('/payment-settings', paymentSettingController.getPaymentSettings);
-router.post(
-  '/',
-  upload.fields([
-    { name: 'photo', maxCount: 1 },
-    { name: 'paymentProof', maxCount: 1 }
-  ]),
-  registrationController.createRegistration
-);
+router.post('/', upload.single('photo'), registrationController.createRegistration);
+router.post('/razorpay-webhook', registrationController.razorpayWebhook);
 router.put('/:id/payment', registrationController.updatePaymentStatus);
+router.post('/:id/create-razorpay-order', registrationController.createRazorpayOrder);
 
 module.exports = router;
