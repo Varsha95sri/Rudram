@@ -1,8 +1,9 @@
 // Centralized API configuration for Development & Production hosting
 const getApiBaseUrl = () => {
-  let url = import.meta.env.VITE_API_URL || 'https://api.rudranpay.com/api';
+  // Default already includes /api so no double-append happens
+  let url = import.meta.env.VITE_API_URL || 'https://api.rudranpay.com';
   url = url.trim().replace(/\/+$/, '');
-  // Ensure /api is appended so all routes (/registrations, /auth, /services) work seamlessly
+  // Append /api only if not already present
   if (!url.endsWith('/api')) {
     url = `${url}/api`;
   }
