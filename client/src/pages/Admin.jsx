@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  Users, CheckCircle2, Clock, AlertCircle, Search, Download, 
-  RefreshCw, Trash2, Eye, X, Lock, Mail, ShieldCheck, 
-  TrendingUp, IndianRupee, Filter, LogOut, Calendar, 
+import {
+  Users, CheckCircle2, Clock, AlertCircle, Search, Download,
+  RefreshCw, Trash2, Eye, X, Lock, Mail, ShieldCheck,
+  TrendingUp, IndianRupee, Filter, LogOut, Calendar,
   MapPin, Phone, GraduationCap, Briefcase, ChevronRight, User
 } from 'lucide-react';
 import { API_BASE_URL } from '../config/api';
@@ -10,7 +10,7 @@ import { API_BASE_URL } from '../config/api';
 export default function Admin() {
   const [token, setToken] = useState(localStorage.getItem('rudram_admin_token') || '');
   const [adminUser, setAdminUser] = useState(JSON.parse(localStorage.getItem('rudram_admin_user') || 'null'));
-  
+
   // Login Form State
   const [email, setEmail] = useState('admin@rudram.com');
   const [password, setPassword] = useState('Admin@12345');
@@ -183,9 +183,9 @@ export default function Admin() {
     }
 
     const headers = [
-      'ID', 'Candidate Name', 'Role', 'Father/Husband Name', 
-      'Contact Number', 'Email', 'Village', 'Post', 'Block', 
-      'District', 'State', 'Pin Code', 'Education', 'Payment Status', 
+      'ID', 'Candidate Name', 'Role', 'Father/Husband Name',
+      'Contact Number', 'Email', 'Village', 'Post', 'Block',
+      'District', 'State', 'Pin Code', 'Education', 'Payment Status',
       'Razorpay Order ID', 'Payment ID', 'Registered At'
     ];
 
@@ -242,7 +242,7 @@ export default function Admin() {
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
 
         <div className="w-full max-w-md bg-slate-900/90 backdrop-blur-xl border border-slate-800 rounded-3xl p-8 shadow-2xl relative z-10">
-          
+
           <div className="text-center mb-8">
             <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-tr from-teal-500 to-cyan-400 p-0.5 shadow-lg shadow-teal-500/20 mb-4">
               <div className="w-full h-full bg-slate-950 rounded-[14px] flex items-center justify-center">
@@ -303,7 +303,7 @@ export default function Admin() {
               </div>
               <div className="flex justify-between items-center">
                 <span>Default Password:</span>
-                <code className="text-teal-400 font-mono">Admin@Rudram2026!</code>
+                <code className="text-teal-400 font-mono">Admin@12345</code>
               </div>
             </div>
 
@@ -384,7 +384,7 @@ export default function Admin() {
 
         {/* 4 Stats Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          
+
           {/* Card 1: Total Applications */}
           <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-5 shadow-sm relative overflow-hidden group hover:border-slate-700 transition">
             <div className="flex justify-between items-start">
@@ -456,7 +456,7 @@ export default function Admin() {
 
         {/* Search, Filter & Actions Toolbar */}
         <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-sm">
-          
+
           {/* Search Input */}
           <div className="relative w-full sm:w-80">
             <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-500">
@@ -473,18 +473,17 @@ export default function Admin() {
 
           {/* Filter & Export Buttons */}
           <div className="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-end">
-            
+
             {/* Status Filter Tabs */}
             <div className="flex bg-slate-950 p-1 rounded-xl border border-slate-800">
               {['All', 'Completed', 'Pending'].map((st) => (
                 <button
                   key={st}
                   onClick={() => setStatusFilter(st)}
-                  className={`px-3 py-1 rounded-lg text-xs font-medium transition cursor-pointer ${
-                    statusFilter === st
+                  className={`px-3 py-1 rounded-lg text-xs font-medium transition cursor-pointer ${statusFilter === st
                       ? 'bg-teal-500 text-slate-950 font-bold shadow-sm'
                       : 'text-slate-400 hover:text-white'
-                  }`}
+                    }`}
                 >
                   {st}
                 </button>
@@ -537,14 +536,14 @@ export default function Admin() {
                 ) : (
                   filteredRegistrations.map((reg) => (
                     <tr key={reg.id} className="hover:bg-slate-800/40 transition">
-                      
+
                       {/* Candidate Column */}
                       <td className="py-3.5 px-4">
                         <div className="flex items-center gap-3">
                           <div className="w-9 h-9 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center overflow-hidden shrink-0">
                             {reg.photo ? (
-                              <img 
-                                src={`${API_BASE_URL.replace(/\/api$/, '')}/${reg.photo}`} 
+                              <img
+                                src={`${API_BASE_URL.replace(/\/api$/, '')}/${reg.photo}`}
                                 alt={reg.name}
                                 className="w-full h-full object-cover"
                                 onError={(e) => { e.target.style.display = 'none'; }}
@@ -595,11 +594,10 @@ export default function Admin() {
                         <button
                           onClick={() => handleStatusUpdate(reg.id, reg.paymentStatus)}
                           disabled={actionLoading === reg.id}
-                          className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-semibold transition cursor-pointer border ${
-                            reg.paymentStatus === 'Completed'
+                          className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-semibold transition cursor-pointer border ${reg.paymentStatus === 'Completed'
                               ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30 hover:bg-emerald-500/20'
                               : 'bg-amber-500/10 text-amber-400 border-amber-500/30 hover:bg-amber-500/20'
-                          }`}
+                            }`}
                           title="Click to toggle Payment Status"
                         >
                           {reg.paymentStatus === 'Completed' ? (
@@ -663,7 +661,7 @@ export default function Admin() {
       {selectedApplicant && (
         <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
           <div className="bg-slate-900 border border-slate-800 rounded-3xl max-w-2xl w-full p-6 shadow-2xl relative my-8 text-slate-100">
-            
+
             {/* Modal Header */}
             <div className="flex items-center justify-between pb-4 border-b border-slate-800 mb-6">
               <div className="flex items-center gap-3">
@@ -685,7 +683,7 @@ export default function Admin() {
 
             {/* Profile Grid */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              
+
               {/* Photo & Status */}
               <div className="flex flex-col items-center text-center p-4 bg-slate-950 rounded-2xl border border-slate-800">
                 <div className="w-32 h-32 rounded-2xl bg-slate-800 border-2 border-slate-700 flex items-center justify-center overflow-hidden mb-3 shadow-inner">
@@ -707,11 +705,10 @@ export default function Admin() {
                   <div className="text-[10px] uppercase font-bold text-slate-500">Payment Status</div>
                   <button
                     onClick={() => handleStatusUpdate(selectedApplicant.id, selectedApplicant.paymentStatus)}
-                    className={`py-1.5 px-3 rounded-xl text-xs font-bold border transition cursor-pointer ${
-                      selectedApplicant.paymentStatus === 'Completed'
+                    className={`py-1.5 px-3 rounded-xl text-xs font-bold border transition cursor-pointer ${selectedApplicant.paymentStatus === 'Completed'
                         ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30 hover:bg-emerald-500/20'
                         : 'bg-amber-500/10 text-amber-400 border-amber-500/30 hover:bg-amber-500/20'
-                    }`}
+                      }`}
                   >
                     {selectedApplicant.paymentStatus} (Click to toggle)
                   </button>
@@ -720,7 +717,7 @@ export default function Admin() {
 
               {/* Complete Information Details */}
               <div className="md:col-span-2 space-y-4 text-xs">
-                
+
                 <div className="p-4 bg-slate-950 rounded-2xl border border-slate-800 space-y-3">
                   <h4 className="font-bold text-slate-300 text-xs uppercase tracking-wider flex items-center gap-1.5">
                     <User className="w-3.5 h-3.5 text-teal-400" /> Personal & Education
